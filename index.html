@@ -188,7 +188,32 @@
         حساب تجريبي — هذا الرصيد افتراضي وليس أموالاً حقيقية.
       </div>
     </section>
+<h2 class="section-title">📈 الرسم البياني للسوق</h2>
 
+<div style="background:#111a2e;border:1px solid #26334c;
+border-radius:12px;padding:10px;margin-bottom:25px;">
+
+  <div id="tradingview_chart" style="height:400px;width:100%;"></div>
+
+</div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+
+<script>
+  new TradingView.widget({
+    autosize: true,
+    symbol: "FX:EURUSD",
+    interval: "60",
+    timezone: "Etc/UTC",
+    theme: "dark",
+    style: "1",
+    locale: "en",
+    enable_publishing: false,
+    hide_top_toolbar: false,
+    allow_symbol_change: true,
+    container_id: "tradingview_chart"
+  });
+</script>
     <h2 class="section-title">أسواق الفوركس</h2>
 
     <section class="markets">
