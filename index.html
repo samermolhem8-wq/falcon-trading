@@ -251,7 +251,7 @@ function changeMarket() {
 
       <article class="market">
         <div class="market-name">EUR/USD</div>
-        <div class="price">1.0850</div>
+        <div class="price" id="eurusd-price">1.0850</div>
         <div class="change">سعر تجريبي</div>
         <div class="actions">
           <button class="buy" onclick="demoTrade('شراء EUR/USD')">شراء</button>
@@ -323,6 +323,29 @@ function changeMarket() {
       );
     }
   </script>
+<script>
+async function updateEURUSD() {
+  try {
+    const response = await fetch(
+      "https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD"
+    );
 
+    if (!response.ok) {
+      throw new Error("تعذر جلب السعر");
+    }
+
+    const data = await response.json();
+    const priceElement = document.getElementById("eurusd-price");
+
+    if (priceElement && data.rates.USD) {
+      priceElement.textContent = data.rates.USD.toFixed(4);
+    }
+  } catch (error) {
+    console.log("تعذر تحديث سعر EUR/USD:", error);
+  }
+}
+
+updateEURUSD();
+</script>
 </body>
 </html>
