@@ -296,6 +296,7 @@ function changeMarket() {
     }
   </script>
 <script>
+<script>
 async function updateEURUSD() {
   try {
     const response = await fetch(
@@ -314,30 +315,6 @@ async function updateEURUSD() {
     }
   } catch (error) {
     console.log("تعذر تحديث سعر EUR/USD:", error);
-  }
-}
-
-updateEURUSD();
-  updateGBPUSD();
-  updateUSDJPY();
-async function updateUSDJPY() {
-  try {
-    const response = await fetch(
-      "https://api.frankfurter.dev/v1/latest?base=USD&symbols=JPY"
-    );
-
-    if (!response.ok) {
-      throw new Error("تعذر جلب السعر");
-    }
-
-    const data = await response.json();
-    const priceElement = document.getElementById("usdjpy-price");
-
-    if (priceElement && data.rates.JPY) {
-      priceElement.textContent = data.rates.JPY.toFixed(2);
-    }
-  } catch (error) {
-    console.log("تعذر تحديث سعر USD/JPY:", error);
   }
 }
 
@@ -361,6 +338,32 @@ async function updateGBPUSD() {
     console.log("تعذر تحديث سعر GBP/USD:", error);
   }
 }
-  </script>
+
+async function updateUSDJPY() {
+  try {
+    const response = await fetch(
+      "https://api.frankfurter.dev/v1/latest?base=USD&symbols=JPY"
+    );
+
+    if (!response.ok) {
+      throw new Error("تعذر جلب السعر");
+    }
+
+    const data = await response.json();
+    const priceElement = document.getElementById("usdjpy-price");
+
+    if (priceElement && data.rates.JPY) {
+      priceElement.textContent = data.rates.JPY.toFixed(2);
+    }
+  } catch (error) {
+    console.log("تعذر تحديث سعر USD/JPY:", error);
+  }
+}
+
+updateEURUSD();
+updateGBPUSD();
+updateUSDJPY();
+</script>
+
 </body>
 </html>
