@@ -348,42 +348,6 @@ function demoTrade(action) {
   );
 }
 
-  const priceElement = document.getElementById(
-    market.toLowerCase().replace("/", "") + "-price"
-  );
-
-  if (!priceElement) {
-    alert("تعذر العثور على سعر السوق.");
-    return;
-  }
-
-  const price = Number(priceElement.textContent);
-
-  if (!Number.isFinite(price) || price <= 0) {
-    alert("السعر غير صالح، حاول مرة أخرى.");
-    return;
-  }
-
-  const trade = {
-    market: market,
-    direction: direction,
-    amount: tradeAmount,
-    entryPrice: price,
-    time: new Date().toLocaleString("ar")
-  };
-
-  demoBalance -= tradeAmount;
-  openTrades.push(trade);
-
-  alert(
-    "تم فتح صفقة تجريبية بنجاح!\n\n" +
-    "السوق: " + trade.market +
-    "\nالاتجاه: " + trade.direction +
-    "\nسعر الدخول: " + trade.entryPrice +
-    "\nقيمة الصفقة: $" + trade.amount +
-    "\nالرصيد المتبقي: $" + demoBalance.toFixed(2)
-  );
-}
   </script>
   
 <script>
