@@ -320,7 +320,6 @@ async function updateEURUSD() {
 updateEURUSD();
   updateGBPUSD();
   updateUSDJPY();
-
 async function updateUSDJPY() {
   try {
     const response = await fetch(
@@ -330,6 +329,17 @@ async function updateUSDJPY() {
     if (!response.ok) {
       throw new Error("تعذر جلب السعر");
     }
+
+    const data = await response.json();
+    const priceElement = document.getElementById("usdjpy-price");
+
+    if (priceElement && data.rates.JPY) {
+      priceElement.textContent = data.rates.JPY.toFixed(2);
+    }
+  } catch (error) {
+    console.log("تعذر تحديث سعر USD/JPY:", error);
+  }
+}
 
 async function updateGBPUSD() {
   try {
