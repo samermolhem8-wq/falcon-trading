@@ -416,5 +416,34 @@ async function updateGBPUSD() {
   }
 }
 </script>
+  <script>
+async function updateApplePrice() {
+  const priceElement = document.getElementById("apple-price");
+
+  try {
+    const response = await fetch(
+      "https://query1.finance.yahoo.com/v8/finance/chart/AAPL"
+    );
+
+    if (!response.ok) {
+      throw new Error("تعذر جلب سعر Apple");
+    }
+
+    const data = await response.json();
+    const price =
+      data.chart.result[0].meta.regularMarketPrice;
+
+    if (priceElement && typeof price === "number") {
+      priceElement.textContent = "$" + price.toFixed(2);
+    }
+  } catch (error) {
+    console.error("تعذر تحديث سعر Apple:", error);
+    priceElement.textContent = "تعذر تحميل السعر";
+  }
+}
+
+updateApplePrice();
+setInterval(updateApplePrice, 60000);
+  </script>
 </body>
 </html>
