@@ -183,7 +183,7 @@
 
     <section class="balance">
       <p>الرصيد التجريبي</p>
-      <div class="amount">$10,000.00</div>
+      <div class="amount" id="balance-amount">$10,000.00</div>
       <div class="notice">
         حساب تجريبي — هذا الرصيد افتراضي وليس أموالاً حقيقية.
       </div>
@@ -301,6 +301,52 @@ function demoTrade(action) {
     alert("الرصيد التجريبي غير كافٍ لفتح الصفقة.");
     return;
   }
+
+  const priceElement = document.getElementById(
+    market.toLowerCase().replace("/", "") + "-price"
+  );
+
+  if (!priceElement) {
+    alert("تعذر العثور على سعر السوق.");
+    return;
+  }
+
+  const price = Number(priceElement.textContent);
+
+  if (!Number.isFinite(price) || price <= 0) {
+    alert("السعر غير صالح، حاول مرة أخرى.");
+    return;
+  }
+
+  openTrades.push({
+    market: market,
+    direction: direction,
+    amount: tradeAmount,
+    entryPrice: price,
+    time: new Date().toLocaleString("ar")
+  });
+
+  demoBalance -= tradeAmount;
+
+  const balanceElement = document.getElementById("balance-amount");
+
+  if (balanceElement) {
+    balanceElement.textContent =
+      "$" + demoBalance.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+  }
+
+  alert(
+    "تم فتح صفقة تجريبية بنجاح!\n\n" +
+    "السوق: " + market +
+    "\nالاتجاه: " + direction +
+    "\nسعر الدخول: " + price +
+    "\nقيمة الصفقة: $" + tradeAmount +
+    "\nالرصيد المتبقي: $" + demoBalance.toFixed(2)
+  );
+}
 
   const priceElement = document.getElementById(
     market.toLowerCase().replace("/", "") + "-price"
