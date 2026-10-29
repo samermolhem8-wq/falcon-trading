@@ -192,7 +192,18 @@
 
 <div style="background:#111a2e;border:1px solid #26334c;
 border-radius:12px;padding:10px;margin-bottom:25px;">
+<label for="marketSelect" style="display:block;color:white;margin-bottom:10px;">
+  اختر السوق:
+</label>
 
+<select id="marketSelect" onchange="changeMarket()"
+  style="width:100%;padding:12px;margin-bottom:15px;border-radius:8px;background:#1b2942;color:white;font-size:16px;">
+  <option value="FX:EURUSD">EUR/USD - اليورو مقابل الدولار</option>
+  <option value="FX:GBPUSD">GBP/USD - الجنيه مقابل الدولار</option>
+  <option value="FX:USDJPY">USD/JPY - الدولار مقابل الين</option>
+  <option value="NASDAQ:AAPL">AAPL - سهم Apple</option>
+  <option value="NASDAQ:TSLA">TSLA - سهم Tesla</option>
+</select>
   <div id="tradingview_chart" style="height:400px;width:100%;"></div>
 
 </div>
@@ -214,6 +225,26 @@ border-radius:12px;padding:10px;margin-bottom:25px;">
     container_id: "tradingview_chart"
   });
 </script>
+    <script>
+function changeMarket() {
+  const market = document.getElementById("marketSelect").value;
+
+  document.getElementById("tradingview_chart").innerHTML = "";
+
+  new TradingView.widget({
+    autosize: true,
+    symbol: market,
+    interval: "60",
+    timezone: "Etc/UTC",
+    theme: "dark",
+    style: "1",
+    locale: "en",
+    enable_publishing: false,
+    allow_symbol_change: true,
+    container_id: "tradingview_chart"
+  });
+}
+    </script>
     <h2 class="section-title">أسواق الفوركس</h2>
 
     <section class="markets">
