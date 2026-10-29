@@ -320,21 +320,6 @@ async function updateEURUSD() {
 updateEURUSD();
   updateGBPUSD();
   updateUSDJPY();
-    const data = await response.json();
-    const price =
-      data.chart.result[0].meta.regularMarketPrice;
-
-    const priceElement = document.getElementById("apple-price");
-
-    if (priceElement && price) {
-      priceElement.textContent = "$" + price.toFixed(2);
-    }
-  } catch (error) {
-    console.log("تعذر تحديث سعر Apple:", error);
-  }
-}
-
-updateApplePrice();
 
 async function updateUSDJPY() {
   try {
