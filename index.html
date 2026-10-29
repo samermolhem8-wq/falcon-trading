@@ -320,16 +320,6 @@ async function updateEURUSD() {
 updateEURUSD();
   updateGBPUSD();
   updateUSDJPY();
-  async function updateApplePrice() {
-  try {
-    const response = await fetch(
-      "https://query1.finance.yahoo.com/v8/finance/chart/AAPL"
-    );
-
-    if (!response.ok) {
-      throw new Error("تعذر جلب سعر Apple");
-    }
-
     const data = await response.json();
     const price =
       data.chart.result[0].meta.regularMarketPrice;
