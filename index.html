@@ -271,7 +271,7 @@ function changeMarket() {
 
       <article class="market">
         <div class="market-name">USD/JPY</div>
-        <div class="price">150.00</div>
+        <div class="price" id="usdjpy-price">150.00</div>
         <div class="change">سعر تجريبي</div>
         <div class="actions">
           <button class="buy" onclick="demoTrade('شراء USD/JPY')">شراء</button>
@@ -347,6 +347,28 @@ async function updateEURUSD() {
 
 updateEURUSD();
   updateGBPUSD();
+  updateUSDJPY();
+
+async function updateUSDJPY() {
+  try {
+    const response = await fetch(
+      "https://api.frankfurter.dev/v1/latest?base=USD&symbols=JPY"
+    );
+
+    if (!response.ok) {
+      throw new Error("تعذر جلب السعر");
+    }
+
+    const data = await response.json();
+    const priceElement = document.getElementById("usdjpy-price");
+
+    if (priceElement && data.rates.JPY) {
+      priceElement.textContent = data.rates.JPY.toFixed(2);
+    }
+  } catch (error) {
+    console.log("تعذر تحديث سعر USD/JPY:", error);
+  }
+}
 
 async function updateGBPUSD() {
   try {
