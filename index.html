@@ -298,15 +298,46 @@ $('bestTrade').textContent=money(best);
   }
   }
   async function openTrade(direction){
-    const symbol=$('pair').value, amount=Number($('amount').value), price=prices[symbol];
-    if(!price){message('tradeMsg','السعر غير متاح حالياً. حاول بعد قليل.',true);return;}
-    if(!Number.isFinite(amount)||amount<10){message('tradeMsg','الحد الأدنى لمبلغ الصفقة هو 10 دولارات.',true);return;}
-    $('buyBtn').disabled=$('sellBtn').disabled=true; message('tradeMsg','جارٍ فتح الصفقة...');
-    try{const {error}=await client.rpc('open_demo_trade',{p_symbol:pairName(symbol),p_direction:direction,p_amount:amount,p_price:price});if(error)throw error;await loadData();
-message('tradeMsg','تم فتح الصفقة بنجاح.');
-notifyUser('🟢 تم فتح صفقة جديدة', 'الزوج: '+pairName(symbol)+' | الاتجاه: '+direction+' | المبلغ: '+money(amount));
-    }
-   } catch(e){message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);}
+  const symbol=$('pair').value, amount=Number($('amount').value), price=prices[symbol];
+
+  if(!price){
+    message('tradeMsg','السعر غير متاح حالياً. حاول بعد قليل.',true);
+    return;
+  }
+
+  if(!Number.isFinite(amount)||amount<10){
+    message('tradeMsg','الحد الأدنى لمبلغ الصفقة هو 10 دولارات.',true);
+    return;
+  }
+
+  $('buyBtn').disabled=$('sellBtn').disabled=true;
+  message('tradeMsg','جارٍ فتح الصفقة...');
+
+  try{
+    const {error}=await client.rpc('open_demo_trade',{
+      p_symbol:pairName(symbol),
+      p_direction:direction,
+      p_amount:amount,
+      p_price:price
+    });
+
+    if(error) throw error;
+
+    await loadData();
+    message('tradeMsg','تم فتح الصفقة بنجاح.');
+
+    notifyUser(
+      '🟢 تم فتح صفقة جديدة',
+      'الزوج: '+pairName(symbol)+' | الاتجاه: '+direction+' | المبلغ: '+money(amount)
+    );
+
+  }catch(e){
+    message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);
+  }finally{
+    $('buyBtn').disabled=$('sellBtn').disabled=false;
+  }
+  }
+  catch(e){message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);}
     finally{$('buyBtn').disabled=$('sellBtn').disabled=false;}
   }
   async function closeTrade(id,symbol){
