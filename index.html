@@ -335,12 +335,6 @@ $('bestTrade').textContent=money(best);
       'الزوج: '+pairName(symbol)+' | الاتجاه: '+direction+' | المبلغ: '+money(amount)
     );
 
-  }catch(e){
-    message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);
-
-  }finally{
-    $('buyBtn').disabled=false;
-    $('sellBtn').disabled=false;
   }
   }
   catch(e){message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);}
