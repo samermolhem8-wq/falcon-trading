@@ -134,11 +134,24 @@
     document.querySelectorAll('.closeTrade').forEach(b=>b.onclick=()=>closeTrade(b.dataset.id,b.dataset.symbol));
   }
   async function fetchPrices(){
-    const pairs=[['EUR','USD','EURUSD'],['GBP','USD','GBPUSD'],['USD','JPY','USDJPY']];
-    for(const [from,to,key] of pairs){
-      try{const r=await fetch(`https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`);if(!r.ok)throw Error('price');const j=await r.json();prices[key]=j.rates[to];$(key.toLowerCase()).textContent=Number(prices[key]).toFixed(5);}
-      catch(e){$(key.toLowerCase()).textContent=prices[key]?Number(prices[key]).toFixed(5):'غير متاح';}
+  const pairs=[
+    ['eur','usd','EURUSD'],
+    ['gbp','usd','GBPUSD'],
+    ['usd','jpy','USDJPY']
+  ];
+
+  for(const [from,to,key] of pairs){
+    try{
+      const r=await fetch(`https://fxapi.app/api/${from}/${to}.json`);
+      if(!r.ok) throw Error('price');
+      const j=await r.json();
+      prices[key]=Number(j.rate);
+      $(key.toLowerCase()).textContent=prices[key].toFixed(5);
+    }catch(e){
+      $(key.toLowerCase()).textContent=
+        prices[key]?prices[key].toFixed(5):'غير متاح';
     }
+  }
   }
   async function openTrade(direction){
     const symbol=$('pair').value, amount=Number($('amount').value), price=prices[symbol];
