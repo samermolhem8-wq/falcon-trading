@@ -94,6 +94,32 @@
   </div>
     </section>
     <section class="card" style="margin-top:14px"><h2 class="section-title">سجل الصفقات المغلقة</h2><div class="table-wrap"><table><thead><tr><th>الزوج</th><th>الاتجاه</th><th>المبلغ</th><th>الربح / الخسارة</th><th>سعر الدخول</th><th>سعر الإغلاق</th><th>التاريخ</th></tr></thead><tbody id="closedTrades"><tr><td colspan="7" class="muted">لا يوجد سجل بعد</td></tr></tbody></table></div></section>
+    <section class="stats" style="margin-top:14px">
+  <div class="card stat">
+    <small>إجمالي الأرباح</small>
+    <strong id="totalProfit" class="green">$0.00</strong>
+  </div>
+  <div class="card stat">
+    <small>إجمالي الخسائر</small>
+    <strong id="totalLoss" class="red">$0.00</strong>
+  </div>
+  <div class="card stat">
+    <small>الصفقات الرابحة</small>
+    <strong id="winningTrades">0</strong>
+  </div>
+  <div class="card stat">
+    <small>الصفقات الخاسرة</small>
+    <strong id="losingTrades">0</strong>
+  </div>
+  <div class="card stat">
+    <small>نسبة النجاح</small>
+    <strong id="winRate">0%</strong>
+  </div>
+  <div class="card stat">
+    <small>أفضل صفقة</small>
+    <strong id="bestTrade" class="green">$0.00</strong>
+  </div>
+    </section>
   </main>
   <div class="foot">Falcon Trading — بيئة تدريب ومحاكاة فقط</div>
 </div>
@@ -147,7 +173,22 @@
     ]);
     if(pe) throw pe; if(te) throw te;
     $('balance').textContent=money(profile.balance);
-    const open=trades.filter(t=>t.status==='OPEN'), closed=trades.filter(t=>t.status==='CLOSED');
+    const open=trades.filter(t=>t.status==='OPEN'), closed=trades.filter(t=>t.status==='CLOSED')
+    const profits=closed.map(t=>Number(t.profit_loss)||0);
+const positive=profits.filter(x=>x>0);
+const negative=profits.filter(x=>x<0);
+
+const totalProfit=positive.reduce((a,b)=>a+b,0);
+const totalLoss=negative.reduce((a,b)=>a+b,0);
+const winRate=closed.length?positive.length/closed.length*100:0;
+const best=profits.length?Math.max(...profits):0;
+
+$('totalProfit').textContent=money(totalProfit);
+$('totalLoss').textContent=money(Math.abs(totalLoss));
+$('winningTrades').textContent=positive.length;
+$('losingTrades').textContent=negative.length;
+$('winRate').textContent=winRate.toFixed(1)+'%';
+$('bestTrade').textContent=money(best);
     $('openCount').textContent=open.length;
      $('openTrades').innerHTML=open.length?open.map(t=>{
   const currentPrice=prices[t.symbol.replace('/','')];
