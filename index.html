@@ -137,6 +137,19 @@
   let mode = 'login', prices = {}, currentUser = null, chartSymbol = 'EURUSD';
 
   function message(id, text, error=false){ $(id).textContent=text; $(id).style.color=error?'#ff9299':'#f2bd4b'; }
+  function notifyUser(title, body){
+  if(!('Notification' in window)) return;
+
+  if(Notification.permission === 'granted'){
+    new Notification(title,{body});
+  }else if(Notification.permission === 'default'){
+    Notification.requestPermission().then(permission=>{
+      if(permission === 'granted'){
+        new Notification(title,{body});
+      }
+    });
+  }
+  }
   function money(n){return '$'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
   function pairName(s){return s.includes('/')?s:s.slice(0,3)+'/'+s.slice(3);}
   function setMode(next){
@@ -289,14 +302,18 @@ $('bestTrade').textContent=money(best);
     if(!price){message('tradeMsg','السعر غير متاح حالياً. حاول بعد قليل.',true);return;}
     if(!Number.isFinite(amount)||amount<10){message('tradeMsg','الحد الأدنى لمبلغ الصفقة هو 10 دولارات.',true);return;}
     $('buyBtn').disabled=$('sellBtn').disabled=true; message('tradeMsg','جارٍ فتح الصفقة...');
-    try{const {error}=await client.rpc('open_demo_trade',{p_symbol:pairName(symbol),p_direction:direction,p_amount:amount,p_price:price});if(error)throw error;await loadData();message('tradeMsg','تم فتح الصفقة بنجاح.');}
+    try{const {error}=await client.rpc('open_demo_trade',{p_symbol:pairName(symbol),p_direction:direction,p_amount:amount,p_price:price});if(error)throw error;await loadData();
+message('tradeMsg','تم فتح الصفقة بنجاح.');
+notifyUser('🟢 تم فتح صفقة جديدة', 'الزوج: '+pairName(symbol)+' | الاتجاه: '+direction+' | المبلغ: '+money(amount));
     catch(e){message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);}
     finally{$('buyBtn').disabled=$('sellBtn').disabled=false;}
   }
   async function closeTrade(id,symbol){
   const price=prices[symbol.replace('/','')]; if(!price){message('tradeMsg','السعر غير متاح للإغلاق الآن.',true);return;}
     if(!confirm('هل تريد إغلاق هذه الصفقة؟'))return;
-    try{const {error}=await client.rpc('close_demo_trade',{p_trade_id:id,p_price:price});if(error)throw error;await loadData();message('tradeMsg','تم إغلاق الصفقة وتحديث الرصيد.');}
+    try{const {error}=await client.rpc('close_demo_trade',{p_trade_id:id,p_price:price});if(error)throw error;await loadData();
+message('tradeMsg','تم إغلاق الصفقة وتحديث الرصيد.');
+notifyUser('🔔 تم إغلاق الصفقة', 'الزوج: '+pairName(symbol)+' | تم تحديث رصيدك.');
     catch(e){message('tradeMsg',e.message||'تعذر إغلاق الصفقة.',true);}
   }
   $('buyBtn').onclick=()=>openTrade('BUY'); $('sellBtn').onclick=()=>openTrade('SELL');
