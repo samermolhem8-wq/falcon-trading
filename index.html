@@ -337,8 +337,6 @@ $('bestTrade').textContent=money(best);
 
   }
   }
-  catch(e){message('tradeMsg',e.message||'تعذر فتح الصفقة.',true);}
-    finally{$('buyBtn').disabled=$('sellBtn').disabled=false;}
   }
   async function closeTrade(id,symbol){
   const price=prices[symbol.replace('/','')]; if(!price){message('tradeMsg','السعر غير متاح للإغلاق الآن.',true);return;}
