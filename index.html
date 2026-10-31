@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#0b1220">
   <title>Falcon Trading | تداول تجريبي</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root{--bg:#080e19;--panel:#111b2b;--panel2:#0d1726;--line:#24344b;--text:#edf4ff;--muted:#91a2bb;--blue:#3987ff;--green:#16c784;--red:#ea555d;--gold:#f2bd4b}
     *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#142744 0,transparent 35%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif}
@@ -120,6 +121,10 @@
     <strong id="bestTrade" class="green">$0.00</strong>
   </div>
     </section>
+    <section class="card" style="margin-top:14px">
+  <h2 class="section-title">أداء الحساب 📈</h2>
+  <div id="performanceChart" style="height:300px"></div>
+    </section>
   </main>
   <div class="foot">Falcon Trading — بيئة تدريب ومحاكاة فقط</div>
 </div>
@@ -214,7 +219,50 @@ $('bestTrade').textContent=money(best);
   </tr>`;
 }).join(''):'<tr><td colspan="7" class="muted">لا توجد صفقات مفتوحة</td></tr>';
     $('closedTrades').innerHTML=closed.length?closed.map(t=>`<tr><td>${pairName(t.symbol)}</td><td>${t.trade_type}</td><td>${money(t.amount)}</td><td class="${Number(t.profit_loss)>=0?'green':'red'}">${money(t.profit_loss)}</td><td>${Number(t.entry_price).toFixed(5)}</td><td>${Number(t.exit_price).toFixed(5)}</td><td>${new Date(t.closed_at||t.created_at).toLocaleString('ar')}</td></tr>`).join(''):'<tr><td colspan="7" class="muted">لا يوجد سجل بعد</td></tr>';
+    drawPerformanceChart(closed);
     document.querySelectorAll('.closeTrade').forEach(b=>b.onclick=()=>closeTrade(b.dataset.id,b.dataset.symbol));
+  }
+    let performanceChartInstance = null;
+
+  function drawPerformanceChart(closed){
+    const sorted = [...closed].sort(
+      (a,b)=>new Date(a.closed_at||a.created_at)-new Date(b.closed_at||b.created_at)
+    );
+
+    let total = 0;
+    const labels = [];
+    const values = [];
+
+    sorted.forEach((trade,index)=>{
+      total += Number(trade.profit_loss)||0;
+      labels.push('صفقة '+(index+1));
+      values.push(Number(total.toFixed(2)));
+    });
+
+    const canvas = document.createElement('canvas');
+    $('performanceChart').innerHTML='';
+    $('performanceChart').appendChild(canvas);
+
+    if(performanceChartInstance) performanceChartInstance.destroy();
+
+    performanceChartInstance = new Chart(canvas,{
+      type:'line',
+      data:{
+        labels,
+        datasets:[{
+          label:'الأداء التراكمي بالدولار',
+          data:values,
+          borderColor:'#3987ff',
+          backgroundColor:'rgba(57,135,255,0.15)',
+          fill:true,
+          tension:0.3
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false
+      }
+    });
   }
   async function fetchPrices(){
   const pairs=[
