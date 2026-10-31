@@ -149,7 +149,29 @@
     $('balance').textContent=money(profile.balance);
     const open=trades.filter(t=>t.status==='OPEN'), closed=trades.filter(t=>t.status==='CLOSED');
     $('openCount').textContent=open.length;
-    $('openTrades').innerHTML=open.length?open.map(t=>`<tr><td>${pairName(t.symbol)}</td><td>${t.trade_type}</td><td>${money(t.amount)}</td><td>${Number(t.entry_price).toFixed(5)}</td><td>${new Date(t.created_at).toLocaleString('ar')}</td><td><button class="danger closeTrade" data-id="${t.id}" data-symbol="${t.symbol}">إغلاق</button></td></tr>`).join(''):'<tr><td colspan="6" class="muted">لا توجد صفقات مفتوحة</td></tr>';
+     $('openTrades').innerHTML=open.length?open.map(t=>{
+  const currentPrice=prices[t.symbol.replace('/','')];
+  let profit=0;
+
+  if(currentPrice){
+    const entry=Number(t.entry_price);
+    const amount=Number(t.amount);
+
+    profit=t.trade_type==='BUY'
+      ? amount*(currentPrice-entry)/entry
+      : amount*(entry-currentPrice)/entry;
+  }
+
+  return `<tr>
+    <td>${pairName(t.symbol)}</td>
+    <td>${t.trade_type}</td>
+    <td>${money(t.amount)}</td>
+    <td>${Number(t.entry_price).toFixed(5)}</td>
+    <td class="${profit>=0?'green':'red'}">${currentPrice?money(profit):'غير متاح'}</td>
+    <td>${new Date(t.created_at).toLocaleString('ar')}</td>
+    <td><button class="danger closeTrade" data-id="${t.id}" data-symbol="${t.symbol}">إغلاق</button></td>
+  </tr>`;
+}).join(''):'<tr><td colspan="7" class="muted">لا توجد صفقات مفتوحة</td></tr>';
     $('closedTrades').innerHTML=closed.length?closed.map(t=>`<tr><td>${pairName(t.symbol)}</td><td>${t.trade_type}</td><td>${money(t.amount)}</td><td class="${Number(t.profit_loss)>=0?'green':'red'}">${money(t.profit_loss)}</td><td>${Number(t.entry_price).toFixed(5)}</td><td>${Number(t.exit_price).toFixed(5)}</td><td>${new Date(t.closed_at||t.created_at).toLocaleString('ar')}</td></tr>`).join(''):'<tr><td colspan="7" class="muted">لا يوجد سجل بعد</td></tr>';
     document.querySelectorAll('.closeTrade').forEach(b=>b.onclick=()=>closeTrade(b.dataset.id,b.dataset.symbol));
   }
