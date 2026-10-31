@@ -1,422 +1,1120 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Falcon Trading</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Falcon Trading</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1120;
-      color: #ffffff;
-    }
+<style>
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      background: #111a2e;
-      border-bottom: 1px solid #26334c;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .logo {
-      color: #38bdf8;
-      font-size: 22px;
-      font-weight: bold;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1120;
+  color: white;
+}
 
-    .login {
-      background: #2563eb;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 10px 16px;
-      cursor: pointer;
-    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #111a2e;
+  border-bottom: 1px solid #26334c;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
+.logo {
+  color: #38bdf8;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .welcome {
-      margin: 15px 0 25px;
-    }
+button {
+  cursor: pointer;
+}
 
-    .welcome h1 {
-      font-size: 27px;
-      margin-bottom: 10px;
-    }
+.login {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 16px;
+}
 
-    .welcome p {
-      color: #94a3b8;
-    }
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
 
-    .balance {
-      background: linear-gradient(135deg, #172554, #164e63);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 25px;
-    }
+.welcome {
+  margin: 15px 0 25px;
+}
 
-    .balance p {
-      color: #cbd5e1;
-      margin: 0 0 12px;
-    }
+.welcome h1 {
+  font-size: 27px;
+}
 
-    .amount {
-      font-size: 30px;
-      font-weight: bold;
-    }
+.welcome p {
+  color: #94a3b8;
+}
 
-    .notice {
-      color: #fbbf24;
-      font-size: 13px;
-      margin-top: 12px;
-    }
+.balance {
+  background: linear-gradient(135deg,#172554,#164e63);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 15px;
+}
 
-    .section-title {
-      font-size: 20px;
-      margin: 25px 0 15px;
-    }
+.amount {
+  font-size: 30px;
+  font-weight: bold;
+}
 
-    .markets {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
+.balance p {
+  color: #cbd5e1;
+}
 
-    .market {
-      background: #111a2e;
-      padding: 18px;
-      border: 1px solid #26334c;
-      border-radius: 12px;
-    }
+.notice {
+  color: #fbbf24;
+  font-size: 13px;
+  margin-top: 12px;
+}
 
-    .market-name {
-      font-size: 16px;
-      font-weight: bold;
-    }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
 
-    .price {
-      font-size: 20px;
-      margin: 14px 0 8px;
-    }
+.stat {
+  background: #111a2e;
+  border: 1px solid #26334c;
+  border-radius: 12px;
+  padding: 17px;
+}
 
-    .change {
-      color: #34d399;
-      font-size: 14px;
-    }
+.stat p {
+  color: #94a3b8;
+  font-size: 13px;
+}
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
+.stat strong {
+  font-size: 20px;
+}
 
-    .actions button {
-      flex: 1;
-      padding: 10px 5px;
-      border: 0;
-      border-radius: 7px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.section-title {
+  font-size: 20px;
+  margin: 28px 0 15px;
+}
 
-    .buy {
-      background: #059669;
-    }
+.markets {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+}
 
-    .sell {
-      background: #dc2626;
-    }
+.market {
+  background: #111a2e;
+  padding: 18px;
+  border: 1px solid #26334c;
+  border-radius: 12px;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      margin-top: 30px;
-      color: #64748b;
-      border-top: 1px solid #26334c;
-      font-size: 13px;
-    }
+.market-name {
+  font-weight: bold;
+}
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 14px;
-      }
+.price {
+  font-size: 22px;
+  margin: 14px 0 8px;
+}
 
-      .markets {
-        grid-template-columns: 1fr;
-      }
+.change {
+  color: #34d399;
+  font-size: 13px;
+}
 
-      .welcome h1 {
-        font-size: 23px;
-      }
-    }
-  </style>
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  color: white;
+  font-weight: bold;
+}
+
+.buy {
+  background: #059669;
+}
+
+.sell {
+  background: #dc2626;
+}
+
+.panel {
+  background: #111a2e;
+  border: 1px solid #26334c;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #1b2942;
+  color: white;
+  font-size: 15px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  color: #cbd5e1;
+}
+
+.open-button {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th, td {
+  padding: 13px;
+  text-align: center;
+  border-bottom: 1px solid #26334c;
+  font-size: 14px;
+}
+
+th {
+  color: #38bdf8;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.close-button {
+  background: #dc2626;
+  color: white;
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.profit {
+  color: #34d399;
+}
+
+.loss {
+  color: #f87171;
+}
+
+.empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 25px;
+}
+
+.chart-box {
+  background: #111a2e;
+  border: 1px solid #26334c;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 25px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  margin-top: 30px;
+  color: #64748b;
+  border-top: 1px solid #26334c;
+  font-size: 13px;
+}
+
+@media(max-width:700px) {
+
+  .markets {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome h1 {
+    font-size: 23px;
+  }
+
+  .container {
+    padding: 14px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">🦅 Falcon Trading</div>
-    <button class="login" onclick="alert('سيتم تفعيل تسجيل الدخول لاحقاً')">
-      دخول
-    </button>
-  </header>
+<header>
 
-  <main class="container">
+  <div class="logo">🦅 Falcon Trading</div>
 
-    <section class="welcome">
-      <h1>مرحباً بك في Falcon Trading</h1>
-      <p>تابع أسواق الفوركس والأسهم من مكان واحد.</p>
-    </section>
+  <button class="login"
+  onclick="alert('سيتم تطوير تسجيل الدخول في مرحلة لاحقة')">
+    دخول
+  </button>
 
-    <section class="balance">
-      <p>الرصيد التجريبي</p>
-      <div class="amount" id="balance-amount">$10,000.00</div>
-      <div class="notice">
-        حساب تجريبي — هذا الرصيد افتراضي وليس أموالاً حقيقية.
-      </div>
-    </section>
-<h2 class="section-title">📈 الرسم البياني للسوق</h2>
+</header>
 
-<div style="background:#111a2e;border:1px solid #26334c;
-border-radius:12px;padding:10px;margin-bottom:25px;">
-<label for="marketSelect" style="display:block;color:white;margin-bottom:10px;">
-  اختر السوق:
-</label>
+<main class="container">
 
-<select id="marketSelect" onchange="changeMarket()"
-  style="width:100%;padding:12px;margin-bottom:15px;border-radius:8px;background:#1b2942;color:white;font-size:16px;">
-  <option value="FX:EURUSD">EUR/USD - اليورو مقابل الدولار</option>
-  <option value="FX:GBPUSD">GBP/USD - الجنيه مقابل الدولار</option>
-  <option value="FX:USDJPY">USD/JPY - الدولار مقابل الين</option>
-</select>
-  <div id="tradingview_chart" style="height:400px;width:100%;"></div>
+<section class="welcome">
+
+  <h1>مرحباً بك في Falcon Trading</h1>
+
+  <p>منصتك التجريبية لتداول الأسواق العالمية.</p>
+
+</section>
+
+<!-- BALANCE -->
+
+<section class="balance">
+
+  <p>الرصيد المتاح</p>
+
+  <div class="amount" id="balance">
+    $10,000.00
+  </div>
+
+  <div class="notice">
+    حساب تجريبي بالكامل - لا توجد أموال حقيقية.
+  </div>
+
+</section>
+
+<!-- ACCOUNT STATS -->
+
+<section class="stats">
+
+  <div class="stat">
+
+    <p>الأموال المستخدمة</p>
+
+    <strong id="used">$0.00</strong>
+
+  </div>
+
+  <div class="stat">
+
+    <p>الأرباح والخسائر المفتوحة</p>
+
+    <strong id="floating">$0.00</strong>
+
+  </div>
+
+  <div class="stat">
+
+    <p>إجمالي الصفقات المفتوحة</p>
+
+    <strong id="trade-count">0</strong>
+
+  </div>
+
+</section>
+
+<!-- CHART -->
+
+<h2 class="section-title">
+  📈 الرسم البياني للسوق
+</h2>
+
+<div class="chart-box">
+
+  <label for="marketSelect">
+    اختر السوق:
+  </label>
+
+  <select id="marketSelect">
+
+    <option value="FX:EURUSD">
+      EUR/USD
+    </option>
+
+    <option value="FX:GBPUSD">
+      GBP/USD
+    </option>
+
+    <option value="FX:USDJPY">
+      USD/JPY
+    </option>
+
+  </select>
+
+  <div id="tradingview_chart"
+  style="height:400px;width:100%;"></div>
 
 </div>
+
+<!-- MARKETS -->
+
+<h2 class="section-title">
+  🌍 أسواق الفوركس
+</h2>
+
+<section class="markets">
+
+  <article class="market">
+
+    <div class="market-name">EUR/USD</div>
+
+    <div class="price" id="eurusd-price">
+      1.0850
+    </div>
+
+    <div class="change">سعر مرجعي</div>
+
+    <div class="actions">
+
+      <button class="buy"
+      onclick="prepareTrade('EUR/USD','شراء')">
+        شراء
+      </button>
+
+      <button class="sell"
+      onclick="prepareTrade('EUR/USD','بيع')">
+        بيع
+      </button>
+
+    </div>
+
+  </article>
+
+  <article class="market">
+
+    <div class="market-name">GBP/USD</div>
+
+    <div class="price" id="gbpusd-price">
+      1.2700
+    </div>
+
+    <div class="change">سعر مرجعي</div>
+
+    <div class="actions">
+
+      <button class="buy"
+      onclick="prepareTrade('GBP/USD','شراء')">
+        شراء
+      </button>
+
+      <button class="sell"
+      onclick="prepareTrade('GBP/USD','بيع')">
+        بيع
+      </button>
+
+    </div>
+
+  </article>
+
+  <article class="market">
+
+    <div class="market-name">USD/JPY</div>
+
+    <div class="price" id="usdjpy-price">
+      150.00
+    </div>
+
+    <div class="change">سعر مرجعي</div>
+
+    <div class="actions">
+
+      <button class="buy"
+      onclick="prepareTrade('USD/JPY','شراء')">
+        شراء
+      </button>
+
+      <button class="sell"
+      onclick="prepareTrade('USD/JPY','بيع')">
+        بيع
+      </button>
+
+    </div>
+
+  </article>
+
+</section>
+
+<!-- OPEN TRADE FORM -->
+
+<h2 class="section-title">
+  🎯 فتح صفقة جديدة
+</h2>
+
+<section class="panel">
+
+  <label>السوق</label>
+
+  <select id="trade-market">
+
+    <option value="EUR/USD">EUR/USD</option>
+
+    <option value="GBP/USD">GBP/USD</option>
+
+    <option value="USD/JPY">USD/JPY</option>
+
+  </select>
+
+  <label>نوع الصفقة</label>
+
+  <select id="trade-direction">
+
+    <option value="شراء">شراء BUY</option>
+
+    <option value="بيع">بيع SELL</option>
+
+  </select>
+
+  <label>قيمة الصفقة بالدولار</label>
+
+  <input
+    type="number"
+    id="trade-amount"
+    value="1000"
+    min="10"
+    step="10"
+    placeholder="أدخل قيمة الصفقة"
+  >
+
+  <button class="open-button"
+  onclick="openTrade()">
+
+    فتح الصفقة الآن
+
+  </button>
+
+</section>
+
+<!-- OPEN TRADES -->
+
+<h2 class="section-title">
+  📊 صفقاتي المفتوحة
+</h2>
+
+<section class="panel">
+
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>السوق</th>
+
+          <th>النوع</th>
+
+          <th>سعر الدخول</th>
+
+          <th>السعر الحالي</th>
+
+          <th>القيمة</th>
+
+          <th>الربح/الخسارة</th>
+
+          <th>إغلاق</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="open-trades">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div id="empty-message" class="empty">
+
+    لا توجد صفقات مفتوحة حالياً.
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+
+  Falcon Trading © 2026
+
+  <br><br>
+
+  منصة تداول افتراضية لأغراض التدريب والتعليم فقط.
+
+  <br>
+
+  الأسعار المرجعية ليست أسعار تنفيذ حقيقية.
+
+</footer>
 
 <script src="https://s3.tradingview.com/tv.js"></script>
 
 <script>
-  new TradingView.widget({
-    autosize: true,
-    symbol: "FX:EURUSD",
-    interval: "60",
-    timezone: "Etc/UTC",
-    theme: "dark",
-    style: "1",
-    locale: "en",
-    enable_publishing: false,
-    hide_top_toolbar: false,
-    allow_symbol_change: true,
-    container_id: "tradingview_chart"
-  });
-</script>
-    <script>
-function changeMarket() {
-  const market = document.getElementById("marketSelect").value;
 
-  document.getElementById("tradingview_chart").innerHTML = "";
+// ==================================
+// ACCOUNT SYSTEM
+// ==================================
 
-  new TradingView.widget({
-    autosize: true,
-    symbol: market,
-    interval: "60",
-    timezone: "Etc/UTC",
-    theme: "dark",
-    style: "1",
-    locale: "en",
-    enable_publishing: false,
-    allow_symbol_change: true,
-    container_id: "tradingview_chart"
-  });
-}
-    </script>
-    <h2 class="section-title">أسواق الفوركس</h2>
+const INITIAL_BALANCE = 10000;
 
-    <section class="markets">
+let demoBalance = INITIAL_BALANCE;
 
-      <article class="market">
-        <div class="market-name">EUR/USD</div>
-        <div class="price" id="eurusd-price">1.0850</div>
-        <div class="change">سعر تجريبي</div>
-        <div class="actions">
-          <button class="buy" onclick="demoTrade('شراء EUR/USD')">شراء</button>
-          <button class="sell" onclick="demoTrade('بيع EUR/USD')">بيع</button>
-        </div>
-      </article>
-
-      <article class="market">
-        <div class="market-name">GBP/USD</div>
-        <div class="price" id="gbpusd-price">1.2700</div>
-        <div class="change">سعر تجريبي</div>
-        <div class="actions">
-          <button class="buy" onclick="demoTrade('شراء GBP/USD')">شراء</button>
-          <button class="sell" onclick="demoTrade('بيع GBP/USD')">بيع</button>
-        </div>
-      </article>
-
-      <article class="market">
-        <div class="market-name">USD/JPY</div>
-        <div class="price" id="usdjpy-price">150.00</div>
-        <div class="change">سعر تجريبي</div>
-        <div class="actions">
-          <button class="buy" onclick="demoTrade('شراء USD/JPY')">شراء</button>
-          <button class="sell" onclick="demoTrade('بيع USD/JPY')">بيع</button>
-        </div>
-      </article>
-
-    </section>
-    
-  </main>
-
-  <footer>
-    Falcon Trading © 2026
-    <br><br>
-    الأسعار والأرصدة المعروضة تجريبية وليست بيانات سوق حية.
-  </footer>
-
-  <script>
-    let demoBalance = 10000;
-const tradeAmount = 1000;
 let openTrades = [];
 
-function demoTrade(action) {
-  const parts = action.split(" ");
-  const direction = parts[0];
-  const market = parts[1];
+let nextTradeId = 1;
 
-  if (demoBalance < tradeAmount) {
-    alert("الرصيد التجريبي غير كافٍ لفتح الصفقة.");
-    return;
-  }
 
-  const priceElement = document.getElementById(
-    market.toLowerCase().replace("/", "") + "-price"
+// ==================================
+// MARKET PRICES
+// ==================================
+
+const prices = {
+
+  "EUR/USD": 1.0850,
+
+  "GBP/USD": 1.2700,
+
+  "USD/JPY": 150.00
+
+};
+
+
+function getPrice(market) {
+
+  return prices[market];
+
+}
+
+
+function formatMoney(value) {
+
+  return "$" + value.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
   );
 
-  if (!priceElement) {
-    alert("تعذر العثور على سعر السوق.");
+}
+
+
+function formatPrice(value, market) {
+
+  return value.toFixed(
+    market === "USD/JPY" ? 2 : 4
+  );
+
+}
+
+
+// ==================================
+// PREPARE TRADE
+// ==================================
+
+function prepareTrade(market, direction) {
+
+  document.getElementById("trade-market").value =
+    market;
+
+  document.getElementById("trade-direction").value =
+    direction;
+
+  document.getElementById("trade-amount").focus();
+
+  document.querySelector(".section-title");
+
+  document.getElementById("trade-amount")
+    .scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+}
+
+
+// ==================================
+// OPEN TRADE
+// ==================================
+
+function openTrade() {
+
+  const market =
+    document.getElementById("trade-market").value;
+
+  const direction =
+    document.getElementById("trade-direction").value;
+
+  const amount = Number(
+    document.getElementById("trade-amount").value
+  );
+
+  if (!Number.isFinite(amount) || amount < 10) {
+
+    alert("الحد الأدنى لقيمة الصفقة هو 10 دولارات.");
+
     return;
+
   }
 
-  const price = Number(priceElement.textContent);
+  if (amount > demoBalance) {
 
-  if (!Number.isFinite(price) || price <= 0) {
-    alert("السعر غير صالح، حاول مرة أخرى.");
+    alert("رصيدك المتاح غير كافٍ.");
+
     return;
+
   }
 
-  openTrades.push({
+  const entryPrice = getPrice(market);
+
+  if (!Number.isFinite(entryPrice) || entryPrice <= 0) {
+
+    alert("السعر غير صالح.");
+
+    return;
+
+  }
+
+  const trade = {
+
+    id: nextTradeId++,
+
     market: market,
+
     direction: direction,
-    amount: tradeAmount,
-    entryPrice: price,
+
+    amount: amount,
+
+    entryPrice: entryPrice,
+
     time: new Date().toLocaleString("ar")
-  });
 
-  demoBalance -= tradeAmount;
+  };
 
-  const balanceElement = document.getElementById("balance-amount");
+  openTrades.push(trade);
 
-  if (balanceElement) {
-    balanceElement.textContent =
-      "$" + demoBalance.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-  }
+  demoBalance -= amount;
+
+  updateDashboard();
 
   alert(
-    "تم فتح صفقة تجريبية بنجاح!\n\n" +
+
+    "تم فتح الصفقة بنجاح! 🎉\n\n" +
+
     "السوق: " + market +
+
     "\nالاتجاه: " + direction +
-    "\nسعر الدخول: " + price +
-    "\nقيمة الصفقة: $" + tradeAmount +
-    "\nالرصيد المتبقي: $" + demoBalance.toFixed(2)
+
+    "\nسعر الدخول: " + entryPrice +
+
+    "\nقيمة الصفقة: " + formatMoney(amount)
+
   );
+
 }
 
-  </script>
-  
-<script>
-async function updateEURUSD() {
-  try {
-    const response = await fetch(
-      "https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD"
+
+// ==================================
+// CALCULATE PROFIT / LOSS
+// ==================================
+
+function calculateProfit(trade) {
+
+  const currentPrice = getPrice(trade.market);
+
+  const priceChange =
+    (currentPrice - trade.entryPrice) /
+    trade.entryPrice;
+
+  const directionMultiplier =
+    trade.direction === "شراء" ? 1 : -1;
+
+  return (
+    trade.amount *
+    priceChange *
+    directionMultiplier
+  );
+
+}
+
+
+// ==================================
+// CLOSE TRADE
+// ==================================
+
+function closeTrade(id) {
+
+  const index = openTrades.findIndex(
+    trade => trade.id === id
+  );
+
+  if (index === -1) {
+
+    alert("هذه الصفقة غير موجودة.");
+
+    return;
+
+  }
+
+  const trade = openTrades[index];
+
+  const profit = calculateProfit(trade);
+
+  const returnedAmount =
+    trade.amount + profit;
+
+  demoBalance += returnedAmount;
+
+  openTrades.splice(index, 1);
+
+  updateDashboard();
+
+  alert(
+
+    "تم إغلاق الصفقة بنجاح.\n\n" +
+
+    "السوق: " + trade.market +
+
+    "\nالنتيجة: " + formatMoney(profit) +
+
+    "\nالمبلغ المعاد: " +
+    formatMoney(returnedAmount) +
+
+    "\nالرصيد المتاح: " +
+    formatMoney(demoBalance)
+
+  );
+
+}
+
+
+// ==================================
+// UPDATE DASHBOARD
+// ==================================
+
+function updateDashboard() {
+
+  const used = openTrades.reduce(
+    (total, trade) => total + trade.amount,
+    0
+  );
+
+  const floating = openTrades.reduce(
+    (total, trade) =>
+      total + calculateProfit(trade),
+    0
+  );
+
+  document.getElementById("balance").textContent =
+    formatMoney(demoBalance);
+
+  document.getElementById("used").textContent =
+    formatMoney(used);
+
+  const floatingElement =
+    document.getElementById("floating");
+
+  floatingElement.textContent =
+    formatMoney(floating);
+
+  floatingElement.className =
+    floating >= 0 ? "profit" : "loss";
+
+  document.getElementById("trade-count").textContent =
+    openTrades.length;
+
+  renderTrades();
+
+}
+
+
+// ==================================
+// RENDER OPEN TRADES
+// ==================================
+
+function renderTrades() {
+
+  const tbody =
+    document.getElementById("open-trades");
+
+  const emptyMessage =
+    document.getElementById("empty-message");
+
+  tbody.innerHTML = "";
+
+  emptyMessage.style.display =
+    openTrades.length === 0 ? "block" : "none";
+
+  openTrades.forEach(trade => {
+
+    const currentPrice =
+      getPrice(trade.market);
+
+    const profit =
+      calculateProfit(trade);
+
+    const row = document.createElement("tr");
+
+    const values = [
+
+      trade.market,
+
+      trade.direction,
+
+      formatPrice(trade.entryPrice, trade.market),
+
+      formatPrice(currentPrice, trade.market),
+
+      formatMoney(trade.amount),
+
+      (profit >= 0 ? "+" : "") +
+      formatMoney(profit),
+
+    ];
+
+    values.forEach((value, index) => {
+
+      const cell = document.createElement("td");
+
+      cell.textContent = value;
+
+      if (index === 5) {
+
+        cell.className =
+          profit >= 0 ? "profit" : "loss";
+
+      }
+
+      row.appendChild(cell);
+
+    });
+
+    const actionCell = document.createElement("td");
+
+    const closeButton =
+      document.createElement("button");
+
+    closeButton.textContent = "إغلاق";
+
+    closeButton.className = "close-button";
+
+    closeButton.addEventListener("click", () => {
+
+      closeTrade(trade.id);
+
+    });
+
+    actionCell.appendChild(closeButton);
+
+    row.appendChild(actionCell);
+
+    tbody.appendChild(row);
+
+  });
+
+}
+
+
+// ==================================
+// UPDATE MARKET PRICES
+// ==================================
+
+async function updatePrices() {
+
+  const requests = [
+
+    ["EUR/USD", "EUR", "USD"],
+
+    ["GBP/USD", "GBP", "USD"],
+
+    ["USD/JPY", "USD", "JPY"]
+
+  ];
+
+  await Promise.all(
+
+    requests.map(async ([market, base, symbol]) => {
+
+      try {
+
+        const response = await fetch(
+
+          "https://api.frankfurter.dev/v1/latest?base=" +
+          base + "&symbols=" + symbol
+
+        );
+
+        if (!response.ok) {
+
+          throw new Error("Price unavailable");
+
+        }
+
+        const data = await response.json();
+
+        const rate = data.rates[symbol];
+
+        if (Number.isFinite(rate) && rate > 0) {
+
+          prices[market] = rate;
+
+          const element = document.getElementById(
+
+            market.toLowerCase().replace("/", "") +
+            "-price"
+
+          );
+
+          element.textContent =
+            formatPrice(rate, market);
+
+        }
+
+      } catch (error) {
+
+        console.log(
+          "تعذر تحديث " + market,
+          error
+        );
+
+      }
+
+    })
+
+  );
+
+  updateDashboard();
+
+}
+
+
+// ==================================
+// TRADINGVIEW CHART
+// ==================================
+
+function loadChart(symbol) {
+
+  const container =
+    document.getElementById("tradingview_chart");
+
+  container.innerHTML = "";
+
+  if (!window.TradingView) {
+
+    container.textContent =
+      "تعذر تحميل الرسم البياني.";
+
+    return;
+
+  }
+
+  new TradingView.widget({
+
+    autosize: true,
+
+    symbol: symbol,
+
+    interval: "60",
+
+    timezone: "Etc/UTC",
+
+    theme: "dark",
+
+    style: "1",
+
+    locale: "en",
+
+    enable_publishing: false,
+
+    allow_symbol_change: true,
+
+    container_id: "tradingview_chart"
+
+  });
+
+}
+
+
+document.getElementById("marketSelect")
+  .addEventListener("change", function() {
+
+    loadChart(this.value);
+
+  });
+
+
+// ==================================
+// START APPLICATION
+// ==================================
+
+updateDashboard();
+
+updatePrices();
+
+setInterval(updatePrices, 60000);
+
+if (window.TradingView) {
+
+  loadChart("FX:EURUSD");
+
+} else {
+
+  const tvScript =
+    document.querySelector(
+      'script[src*="tradingview.com/tv.js"]'
     );
 
-    if (!response.ok) {
-      throw new Error("تعذر جلب السعر");
-    }
+  tvScript.onload = function() {
 
-    const data = await response.json();
-    const priceElement = document.getElementById("eurusd-price");
+    loadChart("FX:EURUSD");
 
-    if (priceElement && data.rates.USD) {
-      priceElement.textContent = data.rates.USD.toFixed(4);
-    }
-  } catch (error) {
-    console.log("تعذر تحديث سعر EUR/USD:", error);
-  }
+  };
+
 }
 
-async function updateGBPUSD() {
-  try {
-    const response = await fetch(
-      "https://api.frankfurter.dev/v1/latest?base=GBP&symbols=USD"
-    );
-
-    if (!response.ok) {
-      throw new Error("تعذر جلب السعر");
-    }
-
-    const data = await response.json();
-    const priceElement = document.getElementById("gbpusd-price");
-
-    if (priceElement && data.rates.USD) {
-      priceElement.textContent = data.rates.USD.toFixed(4);
-    }
-  } catch (error) {
-    console.log("تعذر تحديث سعر GBP/USD:", error);
-  }
-}
-
-async function updateUSDJPY() {
-  try {
-    const response = await fetch(
-      "https://api.frankfurter.dev/v1/latest?base=USD&symbols=JPY"
-    );
-
-    if (!response.ok) {
-      throw new Error("تعذر جلب السعر");
-    }
-
-    const data = await response.json();
-    const priceElement = document.getElementById("usdjpy-price");
-
-    if (priceElement && data.rates.JPY) {
-      priceElement.textContent = data.rates.JPY.toFixed(2);
-    }
-  } catch (error) {
-    console.log("تعذر تحديث سعر USD/JPY:", error);
-  }
-}
-
-updateEURUSD();
-updateGBPUSD();
-updateUSDJPY();
 </script>
 
 </body>
